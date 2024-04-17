@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class Cargando : MonoBehaviour
 {
-    public Text texto;
+    public RawImage cambio;
+    
 
     private void Start()
     {
         string nivelACargar = CargandoNivel.siguienteNivel;
         StartCoroutine(IniciarCarga(nivelACargar));
+       
 
     }
 
@@ -25,7 +27,8 @@ public class Cargando : MonoBehaviour
         {
             if (operacion.progress >= 0.9f)
             {
-                texto.text = "Presiona una tecla para continuar";
+                cambio.gameObject.SetActive(true);
+
                 if (Input.anyKey)
                 {
                     operacion.allowSceneActivation = true;
