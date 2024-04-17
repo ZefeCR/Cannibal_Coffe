@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class ControladorEnemigo1 : MonoBehaviour
+{
+    public Transform objetivo;
+
+    private ComidaenMesa comidaenMesa;
+
+    [SerializeField] private NavMeshAgent agente; // Referencia al componente NavMeshAgent
+    [SerializeField] private Transform posicionInicial; // Transform de la posición inicial del agente
+    [SerializeField] private float duracionInteraccion = 5f; // Duración de la interacción en segundos
+
+    private float tiempoInteraccion = 0f; // Temporizador para la duración de la interacción
+
+    public float velocidadMovimiento = 8f; // Ajusta este valor para la suavidad deseada
+
+    public float returnTimer = 0f; // Temporizador para el regreso
+    private bool returnInitiated = false; // Indica si el regreso ha sido iniciado
+    void Start()
+    {
+
+        NavMeshAgent agente = GetComponent<NavMeshAgent>();
+        agente.destination = objetivo.position;
+
+        comidaenMesa = GameObject.Find("MesaEnemigo1").GetComponent<ComidaenMesa>();
+        bool comida = comidaenMesa.comida;
+
+    }
+    void OnTriggerEnter(Collider otro)
+    {
+        if (otro.gameObject.tag == "Silla") // Comprueba si colisiona con el objetivo
+        {
+            tiempoInteraccion = 0f; // Reinicia el temporizador al iniciar la interacción
+            Debug.Log("Agente interactuando con el objetivo...");
+        }
+    }
+
+    void OnTriggerStay(Collider otro)
+    {
+        if (otro.gameObject.tag == "Silla" && comidaenMesa == true) // Comprueba si colisiona con el objetivo
+        {
+            tiempoInteraccion += Time.deltaTime; // Incrementa el temporizador cada fotograma
+
+            if (tiempoInteraccion >= duracionInteraccion) // Comprueba si la duración de la interacción ha pasado
+            {
+                if (!returnInitiated)
+                {
+                    Debug.Log("Duración de la interacción completada. Devolviendo al agente a la posición inicial.");
+                    agente.speed = velocidadMovimiento;
+                    agente.SetDestination(posicionInicial.position); // Restablece la posición del agente
+                }
+            }
+
+        }
+    }
+
+
+
+    void OnTriggerExit(Collider otro)
+    {
+        if (otro.gameObject.tag == "Silla") // Comprueba si sale de la colisión con el objetivo
+        {
+            tiempoInteraccion = 0f; // Reinicia el temporizador al finalizar la interacción
+            Debug.Log("Interacción del agente con el objetivo finalizada.");
+        }
+    }
+}

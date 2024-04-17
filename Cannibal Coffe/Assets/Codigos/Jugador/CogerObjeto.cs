@@ -28,7 +28,7 @@ public class CogerObjeto : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Objeto"))
+        if (other.gameObject.CompareTag("Comida"))
         {
             if (Input.GetKey("e") && pickedObject == null)
             {

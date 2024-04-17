@@ -6,16 +6,18 @@ TagManager:
   tags:
   - Objeto
   - Silla
-  - Enemigo2
+  - Comida
+  - Enemigo
+  - Mesa
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Personajes
   - Water
   - UI
   - EnelPiso
-  - 
+  - Obstaculos
   - 
   - 
   - 

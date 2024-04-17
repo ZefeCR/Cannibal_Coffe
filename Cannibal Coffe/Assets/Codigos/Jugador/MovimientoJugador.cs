@@ -15,14 +15,20 @@ public class MovimientoJugador : MonoBehaviour
     Vector3 VelocidadAbajo;
     bool EstaenelPiso;
 
-    private void Update()
+    //Animaciones
+    private Animator anim;
+    public float x, z;
+
+    void Start()
+    {
+        anim= GetComponent<Animator>();
+    }
+
+    void Update()
     {
         EstaenelPiso = Physics.CheckSphere(EnelPiso.position, DistanciadelPiso, MascaradelPiso);
 
-        if (EstaenelPiso && VelocidadAbajo.y < 0)
-        {
-            VelocidadAbajo.y = -2;
-        }
+        
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -30,10 +36,16 @@ public class MovimientoJugador : MonoBehaviour
         Vector3 mover = transform.right * x + transform.forward * z;
         Controlador.Move(mover * Velocidad * Time.deltaTime);
 
+        anim.SetFloat("VelX", x);
+        anim.SetFloat("VelZ", z);
+
         VelocidadAbajo.y += Gravedad * Time.deltaTime;
+        
+        
 
         Controlador.Move(VelocidadAbajo * Time.deltaTime);
 
+        
     }
 }
 
