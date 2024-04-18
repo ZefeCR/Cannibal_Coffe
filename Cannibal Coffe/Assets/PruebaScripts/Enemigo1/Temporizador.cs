@@ -10,8 +10,7 @@ public class Temporizador : MonoBehaviour
     private float tiempoRestante; // Tiempo restante del temporizador
     private bool temporizadorEncendido = false; // Indica si el temporizador está encendido
 
-    //Vida
-    Vida Vida;
+   
     void Start()
     {
         sliderTemporizador.maxValue = tiempoTotal; // Establece el valor máximo del slider
@@ -19,8 +18,7 @@ public class Temporizador : MonoBehaviour
 
         tiempoRestante = tiempoTotal; // Inicializa el tiempo restante
 
-        //Vida
-        Vida = GameObject.Find("COFFE").GetComponent<Vida>();
+       
     }
     
     public void IniciarTemporizador()
@@ -32,7 +30,10 @@ public class Temporizador : MonoBehaviour
 
     public void DetenerTemporizador()
     {
-        temporizadorEncendido = false; // Apaga el temporizador
+        temporizadorEncendido = false;
+        sliderTemporizador.value = tiempoTotal;
+        enabled = false;
+        
     }
 
 
@@ -45,8 +46,10 @@ public class Temporizador : MonoBehaviour
             if (tiempoRestante <= 0)
             {
                 tiempoRestante = 0; // Asegura que el slider no baje de 0
+                DetenerTemporizador();
+                enabled = false;
                 // Implementar la lógica de finalización del temporizador aquí
-                Vida.ActivarSliderDaño();
+
             }
 
             sliderTemporizador.value = tiempoRestante; // Actualiza el valor del slider

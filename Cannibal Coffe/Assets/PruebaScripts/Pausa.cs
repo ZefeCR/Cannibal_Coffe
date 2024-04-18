@@ -9,8 +9,11 @@ public class Pausa : MonoBehaviour
 
     private void Start()
     {
+
         menuPausa = find;
         
+
+
     }
     public void MostrarMenuPausa()
     {

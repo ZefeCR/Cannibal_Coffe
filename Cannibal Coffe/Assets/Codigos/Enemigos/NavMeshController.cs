@@ -87,7 +87,7 @@ public class NavMeshController : MonoBehaviour
 
     void OnTriggerExit(Collider otro)
     {
-        if (otro.gameObject.tag == "Silla") // Comprueba si sale de la colisión con el objetivo
+        if (otro.gameObject.tag != "Silla") // Comprueba si sale de la colisión con el objetivo
         {
             tiempoInteraccion = 0f; // Reinicia el temporizador al finalizar la interacción
             Debug.Log("Interacción del agente con el objetivo finalizada.");

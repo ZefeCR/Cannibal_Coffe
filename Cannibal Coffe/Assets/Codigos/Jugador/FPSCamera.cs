@@ -10,15 +10,19 @@ public class FPSCamera : MonoBehaviour
     public Transform Player;
 
     //Menu Pausa
-    Pausa pausa;
+    public Pausa pausaScript; // Referencia al script Pausa
 
     void Start()
     {
-        Cursor.visible = false;
+        if (pausaScript == null)
+        {
+            Debug.LogError("No se ha asignado el script Pausa en el script FPSCamera.");
+            return;
+        }
 
-        //Menu Pausa
-        pausa = GameObject.Find("ControladorMenu").GetComponent<Pausa>();
-        Canvas menuPausa = pausa.menuPausa;
+        // Bloquear y ocultar el cursor inicialmente
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     void Update()
     {
@@ -31,17 +35,17 @@ public class FPSCamera : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(RotacionX, 0f, 0f);
         Player.Rotate(Vector3.up * MauseX);
-
-        if (!pausa.gameObject ==true)
+        // Manejar el estado del cursor según el menú de pausa
+        if (pausaScript.menuPausa.gameObject.activeSelf)
         {
-            // Ocultar el cursor mientras el juego se ejecuta
-            Cursor.lockState = CursorLockMode.Locked;
+            // Mostrar y desbloquear el cursor cuando el menú de pausa está activo
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         else
         {
-            // Mostrar el cursor cuando el menú de pausa está activo
-            Cursor.lockState = CursorLockMode.None;
+            // Bloquear y ocultar el cursor cuando el menú de pausa está inactivo
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
     }

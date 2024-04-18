@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.AI;
 
 public class Controlador3 : MonoBehaviour
 {
+    public Temporizador3 temporizador3;
 
     public Transform objetivo;
 
@@ -39,6 +41,8 @@ public class Controlador3 : MonoBehaviour
         //Animacion
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.destination = objetivo.position;
+
+        temporizador3 = GameObject.Find("Temporizador3").GetComponent<Temporizador3>();
 
         comidaenMesa = GameObject.Find("MesaEnemigo3").GetComponent<ComidaenMesa3>();
         bool comida = comidaenMesa.comida;
@@ -104,10 +108,12 @@ public class Controlador3 : MonoBehaviour
 
     void OnTriggerExit(Collider otro)
     {
-        if (otro.gameObject.tag == "Silla") // Comprueba si sale de la colisión con el objetivo
+        if (otro.gameObject.tag == "Silla" && comidaenMesa == true) // Comprueba si sale de la colisión con el objetivo
         {
             tiempoInteraccion = 0f; // Reinicia el temporizador al finalizar la interacción
             Debug.Log("Interacción del agente con el objetivo finalizada.");
+           
+
         }
     }
 }

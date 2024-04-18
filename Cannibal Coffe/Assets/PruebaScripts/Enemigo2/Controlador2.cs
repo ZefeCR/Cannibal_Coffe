@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Controlador2 : MonoBehaviour
 {
-
+    
     public Transform objetivo;
 
     private ComidaenMesa2 comidaenMesa;
@@ -41,6 +41,8 @@ public class Controlador2 : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.destination = objetivo.position;
 
+      
+
         comidaenMesa = GameObject.Find("MesaEnemigo2").GetComponent<ComidaenMesa2>();
         bool comida = comidaenMesa.comida;
         
@@ -51,26 +53,7 @@ public class Controlador2 : MonoBehaviour
 
         Vector3 velocity = navAgent.velocity;
         animator.SetFloat("VelX", velocity.x);
-        animator.SetFloat("VelZ", velocity.z);
-
-        // Rotar al personaje hacia el objetivo
-        Vector3 direccionObjetivo = target.position - transform.position;
-        Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionObjetivo);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, velocidadRotacion * Time.deltaTime);
-
-        RaycastHit impacto;
-        if (Physics.Raycast(transform.position + transform.forward * 0.5f, direccionObjetivo, out impacto, distanciaMaximaRaycast,20 << LayerMask.NameToLayer("Obstaculos")))
-        {
-            // Si se detecta un obstáculo, ajustar la rotación según el punto de impacto
-            Vector3 direccionAjustada = impacto.point - transform.position;
-            Quaternion rotacionAjustada = Quaternion.LookRotation(direccionAjustada);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionAjustada, velocidadRotacion * Time.deltaTime);
-        }
-        else
-        {
-            // Si no se detecta obstáculo, rotar directamente hacia el objetivo
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, velocidadRotacion * Time.deltaTime);
-        }
+        animator.SetFloat("VelZ", velocity.z); 
     }
 
     void OnTriggerEnter(Collider otro)
@@ -84,7 +67,7 @@ public class Controlador2 : MonoBehaviour
 
     void OnTriggerStay(Collider otro)
     {
-        if (otro.gameObject.tag == "Silla" ) // Comprueba si colisiona con el objetivo
+        if (otro.gameObject.tag == "Silla" && comidaenMesa == true) // Comprueba si colisiona con el objetivo
         {
             tiempoInteraccion += Time.deltaTime; // Incrementa el temporizador cada fotograma
 
@@ -105,7 +88,7 @@ public class Controlador2 : MonoBehaviour
 
     void OnTriggerExit(Collider otro)
     {
-        if (otro.gameObject.tag == "Silla" && comidaenMesa == true) // Comprueba si sale de la colisión con el objetivo
+        if (otro.gameObject.tag == "Silla" ) // Comprueba si sale de la colisión con el objetivo
         {
             tiempoInteraccion = 0f; // Reinicia el temporizador al finalizar la interacción
             Debug.Log("Interacción del agente con el objetivo finalizada.");

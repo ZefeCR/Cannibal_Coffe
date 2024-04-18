@@ -14,6 +14,7 @@ public class ComidaenMesa : MonoBehaviour
         if (other.gameObject.tag == "Comida") // Si el alimento colisiona con la mesa
         {
            comida = true;
+
         }
     }
 }

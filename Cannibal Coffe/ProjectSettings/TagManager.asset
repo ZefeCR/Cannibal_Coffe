@@ -9,6 +9,8 @@ TagManager:
   - Comida
   - Enemigo
   - Mesa
+  - ObjetoCambioEscena
+  - Puerta
   layers:
   - Default
   - TransparentFX

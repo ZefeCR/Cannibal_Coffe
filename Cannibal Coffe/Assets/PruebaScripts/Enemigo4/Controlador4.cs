@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Controlador4 : MonoBehaviour
 {
@@ -47,7 +48,6 @@ public class Controlador4 : MonoBehaviour
 
     void Update()
     {
-
         Vector3 velocity = navAgent.velocity;
         animator.SetFloat("VelX", velocity.x);
         animator.SetFloat("VelZ", velocity.z);
@@ -88,18 +88,17 @@ public class Controlador4 : MonoBehaviour
 
             if (tiempoInteraccion >= duracionInteraccion) // Comprueba si la duración de la interacción ha pasado
             {
-                if (!returnInitiated) 
-               { 
-                Debug.Log("Duración de la interacción completada. Devolviendo al agente a la posición inicial.");
-                agente.speed = velocidadMovimiento;
-                agente.SetDestination(posicionInicial.position); // Restablece la posición del agente
+                if (!returnInitiated)
+                {
+                    Debug.Log("Duración de la interacción completada. Devolviendo al agente a la posición inicial.");
+                    agente.speed = velocidadMovimiento;
+                    agente.SetDestination(posicionInicial.position); // Restablece la posición del agente
+                    returnInitiated = true; // Indica que el regreso ha sido iniciado
                 }
             }
-        
+
         }
     }
-
-  
 
     void OnTriggerExit(Collider otro)
     {
@@ -107,6 +106,9 @@ public class Controlador4 : MonoBehaviour
         {
             tiempoInteraccion = 0f; // Reinicia el temporizador al finalizar la interacción
             Debug.Log("Interacción del agente con el objetivo finalizada.");
+
+           
         }
     }
+
 }

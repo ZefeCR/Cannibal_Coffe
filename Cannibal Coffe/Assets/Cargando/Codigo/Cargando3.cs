@@ -18,7 +18,7 @@ public class Cargando3 : MonoBehaviour
     }
     IEnumerator EsperarYCambiarPantalla()
     {
-        yield return new WaitForSeconds(3f); // Espera 3 segundos (puedes ajustar el tiempo)
+        yield return new WaitForSeconds(4f); // Espera 3 segundos (puedes ajustar el tiempo)
         pantallaCargaInicial.enabled = false;
         pantallaPresionarTecla.enabled = true;
     }

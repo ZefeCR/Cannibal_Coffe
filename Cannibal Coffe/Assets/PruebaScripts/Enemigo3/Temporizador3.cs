@@ -26,7 +26,10 @@ public class Temporizador3 : MonoBehaviour
 
     public void DetenerTemporizador()
     {
-        temporizadorEncendido = false; // Apaga el temporizador
+        temporizadorEncendido = false;
+        sliderTemporizador.value = tiempoTotal;
+        enabled = false;
+        // Apaga el temporizador
     }
 
 
